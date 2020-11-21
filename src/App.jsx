@@ -9,14 +9,10 @@ class App extends React.Component {
     order: "ascend",
   };
 
-  componentDidMount() {
-    this.getUsers();
-  }
-
   getUsers = async () => {
     try {
       const response = await API.getUsers();
-      console.log(response.data.results);
+      //console.log(response.data.results);
 
       const parsed = response.data.results.map((x) => ({
         lastName: x.name.last,
@@ -24,11 +20,15 @@ class App extends React.Component {
         img: x.picture.thumbnail,
       }));
 
-      this.setState({ users: parsed, userCopy: parsed });
+      this.setState({ users: parsed, usersCopy: parsed });
     } catch (error) {
       console.warn(error);
     }
   };
+
+  componentDidMount() {
+    this.getUsers();
+  }
 
   handleInp = (val) => {
     this.setState({
@@ -39,8 +39,6 @@ class App extends React.Component {
   empSortedByLastName = () => {
     console.log("run here");
     const sortedUsers = this.state.usersCopy;
-    // if (this.state.order === "ascend") {
-    //this.setState({
     sortedUsers.sort(function (a, b) {
       console.log(a.last, "a value", b.last, "b value");
       var empA = a.name.last.toUpperCase();
@@ -57,7 +55,6 @@ class App extends React.Component {
     this.setState = {
       userCopy: sortedUsers,
     };
-    //}
 
     this.setState({
       usersCopy: this.state.users.sort((a, b) => {
@@ -82,18 +79,23 @@ class App extends React.Component {
     const key = e.target.getAttribute("data-name");
 
     this.setState({
-      users: this.state.users.sort((a, b) => a[key] > b[key] ? 1 : -1)
-    })
+      users: this.state.users.sort((a, b) => (a[key] > b[key] ? 1 : -1)),
+    });
   };
 
   render() {
-    // EmpTable({ employees: this.state.users, sortTable: this.sortTable })
-
     return (
-      <div className="">
+      <div className="text-center mb-4">
         <h1 className="text-center mb-4">Employee Directory</h1>
-        <input type="text" onChange={(e) => this.handleInp(e.target.value)} />
-        {/* <button onClick={() => this.empSortedByLastName()}>Sort</button> */}
+        <label className="text-center mb-4" htmlFor="text">
+          Search for employees:
+        </label>
+        <input
+          className="text-center mb-4"
+          type="text"
+          onChange={(e) => this.handleInp(e.target.value)}
+        />
+
         <EmpTable employees={this.state.users} sortTable={this.sortTable} />
       </div>
     );

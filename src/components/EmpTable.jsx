@@ -5,29 +5,29 @@ function EmpTable(props) {
   const Row = (props) => {
     return (
       <tr>
-        <td>
+        <td className="text-center">
           <img src={props.employee.img} alt="" />
         </td>
-        <td>{props.employee.firstName}</td>
-        <td>{props.employee.lastName}</td>
+        <td className="text-center">{props.employee.firstName}</td>
+        <td className="text-center">{props.employee.lastName}</td>
       </tr>
     );
   };
 
   return (
     <div className="wrapper">
-      <table className="table table-lg">
+      <table className="table table-sm">
         <thead className="styleTest">
           <tr>
-            <td data-name="img" onClick={props.sortTable}>
+            <th data-name="img" onClick={props.sortTable}>
               IMG
-            </td>
-            <td data-name="firstName" onClick={props.sortTable}>
-              First
-            </td>
-            <td data-name="lastName" onClick={props.sortTable}>
-              Last
-            </td>
+            </th>
+            <th data-name="firstName" onClick={props.sortTable}>
+              First 🔻
+            </th>
+            <th data-name="lastName" onClick={props.sortTable}>
+              Last 🔻
+            </th>
           </tr>
         </thead>
         <tbody>
